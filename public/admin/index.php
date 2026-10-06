@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../src/bootstrap.php';
+require __DIR__ . '/../../../contact-src/bootstrap.php';
 require __DIR__ . '/_layout.php';
 start_admin_session();
 (new Auth)->requireLogin();
@@ -7,7 +7,7 @@ $messages = new Messages;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     csrf_check();
     $messages->delete((int) $_POST['delete']);
-    header('Location: /admin/index.php'); exit;
+    header('Location: index.php'); exit;
 }
 $perPage = 20;
 $total = $messages->count();

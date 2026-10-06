@@ -1,5 +1,6 @@
 <?php
-require __DIR__ . '/../src/bootstrap.php';
+require __DIR__ . '/locate.php';
+require CONTACT_SRC . '/bootstrap.php';
 
 header('Content-Type: application/json');
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';

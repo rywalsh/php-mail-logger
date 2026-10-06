@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../src/bootstrap.php';
+require __DIR__ . '/../../../contact-src/bootstrap.php';
 require __DIR__ . '/_layout.php';
 start_admin_session();
 (new Auth)->requireLogin();
@@ -48,5 +48,5 @@ admin_header('Settings'); ?>
 <?php endforeach; ?></div>
 <button>Save</button></form>
 <div class="card"><strong>Embed snippet</strong>
-<pre>&lt;script src="<?= e((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST']) ?>/form.js"&gt;&lt;/script&gt;</pre></div>
+<pre>&lt;script src="<?= e((!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/')) ?>/form.js"&gt;&lt;/script&gt;</pre></div>
 <?php admin_footer();

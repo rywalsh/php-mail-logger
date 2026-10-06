@@ -42,7 +42,7 @@ class Auth {
 
     public function requireLogin() {
         if (!$this->isLoggedIn()) {
-            header('Location: /admin/login.php');
+            header('Location: login.php');
             exit;
         }
     }

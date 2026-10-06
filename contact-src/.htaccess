@@ -1,0 +1,5 @@
+# Keep application code and credentials private if this folder sits under the web root.
+Require all denied
+<IfModule !mod_authz_core.c>
+    Deny from all
+</IfModule>

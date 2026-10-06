@@ -1,5 +1,5 @@
 <?php
-// Copy to config.php and edit.
+// Copy to settings.local.php and edit.
 return [
     'db' => [
         'host' => 'localhost',

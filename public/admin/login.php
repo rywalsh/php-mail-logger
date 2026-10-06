@@ -1,13 +1,13 @@
 <?php
-require __DIR__ . '/../../src/bootstrap.php';
+require __DIR__ . '/../../../contact-src/bootstrap.php';
 start_admin_session();
 $auth = new Auth;
-if ($auth->isLoggedIn()) { header('Location: /admin/index.php'); exit; }
+if ($auth->isLoggedIn()) { header('Location: index.php'); exit; }
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_check();
     if ($auth->login(trim($_POST['email'] ?? ''), $_POST['password'] ?? '')) {
-        header('Location: /admin/index.php'); exit;
+        header('Location: index.php'); exit;
     }
     $error = 'Invalid email or password.';
     usleep(500000);

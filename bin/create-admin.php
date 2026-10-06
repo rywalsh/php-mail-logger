@@ -1,6 +1,6 @@
 <?php
 // Usage: php bin/create-admin.php admin@example.com 'password'
-require __DIR__ . '/../src/bootstrap.php';
+require __DIR__ . '/../contact-src/bootstrap.php';
 [, $email, $pass] = $argv + [null, null, null];
 if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen((string) $pass) < 8) {
     fwrite(STDERR, "Usage: php bin/create-admin.php <email> <password (8+ chars)>\n");

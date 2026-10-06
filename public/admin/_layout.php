@@ -17,7 +17,7 @@ button.danger{background:#b91c1c;margin:0}
 .meta{color:#666;font-size:14px}
 pre{white-space:pre-wrap;word-break:break-word;font:inherit;margin:8px 0}
 </style></head><body>
-<nav><a href="/admin/index.php">Messages</a><a href="/admin/settings.php">Settings</a>
-<form method="post" action="/admin/logout.php" style="margin-left:auto"><input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>"><button style="margin:0;padding:4px 12px">Log out</button></form></nav>
+<nav><a href="index.php">Messages</a><a href="settings.php">Settings</a>
+<form method="post" action="logout.php" style="margin-left:auto"><input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>"><button style="margin:0;padding:4px 12px">Log out</button></form></nav>
 <main><?php }
 function admin_footer() { echo '</main></body></html>'; }
