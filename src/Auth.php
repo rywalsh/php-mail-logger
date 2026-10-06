@@ -17,6 +17,7 @@ class Auth {
         $result = $stmt->get_result()->fetch_assoc();
 
         if ($result && password_verify($password, $result['password_hash'])) {
+            session_regenerate_id(true);
             $_SESSION['admin_id'] = $result['id'];
             $_SESSION['admin_email'] = $result['email'];
 
