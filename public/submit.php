@@ -54,15 +54,7 @@ try {
     $settings = new Settings;
     $to = $settings->get('recipient_email');
     if (filter_var($to, FILTER_VALIDATE_EMAIL)) {
-        $strip = fn($s) => preg_replace('/[\r\n]+/', ' ', $s);
-        $headers = [
-            'From: ' . Config::get('mail_from'),
-            'Reply-To: ' . $email,
-            'Content-Type: text/plain; charset=UTF-8',
-        ];
-        $body = "Name: $name\nEmail: $email\nPage: $pageUrl\n\n$message\n";
-        $subj = '=?UTF-8?B?' . base64_encode('[Contact] ' . ($strip($subject) ?: "Message from $name")) . '?=';
-        if (@mail($to, $subj, $body, implode("\r\n", $headers))) $messages->markSent($id);
+        if (Mailer::sendContact($to, $name, $email, $subject, $message, $pageUrl, $ip)) $messages->markSent($id);
     }
 
     respond(200, ['ok' => true, 'message' => $settings->get('confirmation_message')]);

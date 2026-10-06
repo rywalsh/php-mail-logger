@@ -4,6 +4,7 @@ require_once __DIR__ . '/database.php';
 require_once __DIR__ . '/auth.php';
 require_once __DIR__ . '/settings.php';
 require_once __DIR__ . '/messages.php';
+require_once __DIR__ . '/mailer.php';
 
 function e($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }
 
