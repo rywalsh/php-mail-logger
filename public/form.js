@@ -45,6 +45,7 @@
     '<div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required><div class="err" data-for="email"></div></div></div>' +
     '<label for="subject">Subject</label><input id="subject" name="subject"><div class="err" data-for="subject"></div>' +
     '<label for="message">Message</label><textarea id="message" name="message" required></textarea><div class="err" data-for="message"></div>' +
+    '<label for="files">Attachments (optional)</label><input id="files" name="files[]" type="file" multiple><div class="err" data-for="files"></div>' +
     '<div class="hp" aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off"></div>' +
     '<div class="err" data-for="form" role="alert"></div>' +
     '<button type="submit">Send message</button></form></div>';
@@ -62,17 +63,15 @@
 
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
-    var data = {};
-    new FormData(form).forEach(function (v, k) { data[k] = v; });
-    data.page_url = location.href;
+    var data = new FormData(form);
+    data.append('page_url', location.href);
     showErrors({});
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
     fetch(endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      body: data
     })
       .then(function (r) { return r.json().catch(function () { return {}; }); })
       .then(function (res) {

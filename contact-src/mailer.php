@@ -5,7 +5,7 @@ class Mailer {
         return preg_match('/[^\x20-\x7e]/', $s) ? '=?UTF-8?B?' . base64_encode($s) . '?=' : $s;
     }
 
-    public static function sendContact($to, $name, $email, $subject, $message, $pageUrl, $ip) {
+    public static function sendContact($to, $name, $email, $subject, $message, $pageUrl, $ip, array $files = []) {
         $subjectLine = '[Contact] ' . ($subject !== '' ? $subject : "Message from $name");
         $safeName = str_replace(['"', '\\'], '', preg_replace('/[\r\n]+/', ' ', $name));
         $replyTo = '"' . self::header($safeName) . '" <' . $email . '>';
@@ -14,7 +14,9 @@ class Mailer {
             . "Name:    $name\nEmail:   $email\n"
             . ($subject !== '' ? "Subject: $subject\n" : '')
             . ($pageUrl !== '' ? "Page:    $pageUrl\n" : '')
-            . "\n$message\n\n--\nReply to this email to respond to $name.\n";
+            . "\n$message\n\n"
+            . ($files ? "Attachments:\n" . implode("\n", array_map(fn($f) => "{$f['name']}: {$f['url']}", $files)) . "\n\n" : '')
+            . "--\nReply to this email to respond to $name.\n";
 
         $c = (new Settings)->colors();
         $row = fn($label, $value) => '<tr><td style="padding:6px 12px 6px 0;color:#6b7280;white-space:nowrap;vertical-align:top">'
@@ -29,6 +31,9 @@ class Mailer {
             . '<div style="padding:24px"><table style="border-collapse:collapse;font-size:15px">' . $rows . '</table>'
             . '<div style="margin:20px 0 0;padding:16px;background:#f9fafb;border-left:4px solid ' . $c['color_primary'] . ';border-radius:4px;font-size:15px;line-height:1.5;color:#111827;white-space:pre-wrap">'
             . e($message) . '</div>'
+            . ($files ? '<div style="margin:20px 0 0;font-size:15px;color:#111827"><strong>Attachments</strong><ul style="margin:8px 0 0;padding-left:20px">'
+                . implode('', array_map(fn($f) => '<li><a href="' . e($f['url']) . '" style="color:' . $c['color_primary'] . '">' . e($f['name'])
+                    . '</a> <span style="color:#6b7280">(' . round($f['size'] / 1024) . ' KB)</span></li>', $files)) . '</ul></div>' : '')
             . '<p style="margin:20px 0 0;font-size:13px;color:#6b7280">Hit reply to respond to ' . e($name) . ' directly.</p></div></div></body></html>';
 
         $boundary = 'b_' . bin2hex(random_bytes(12));
